@@ -119,11 +119,11 @@ public class JavaProjectsThatNeedHelp {
 							public void processElement(ProcessContext c) throws Exception {
 								String packageName = c.element().getKey();
 								int numTimesUsed = c.element().getValue();
-								double useScore = Math.log(numTimesUsed);
 								Integer numHelpNeeded = c.sideInput(packagesThatNeedHelp).get(packageName);
 								if (numHelpNeeded != null) {
 									// multiply to get composite score
-									c.output(KV.of(packageName, useScore * numHelpNeeded));
+									// log() because these measures are subject to tournament effects
+									c.output(KV.of(packageName, Math.log(numTimesUsed) * Math.log(numHelpNeeded)));
 								}
 							}
 
